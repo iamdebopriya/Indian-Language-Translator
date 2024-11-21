@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Language Translator</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff5f8;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1600px;
+            overflow-y: auto;
+            height: 80vh;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #ff6f91;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            border: 2px solid #ffbdd9;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 16px;
+            color: #333;
+            resize: none;
+            background: #fffafc;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: #ff6f91;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #e85574;
+        }
+
+        .translations-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .translations-table th, .translations-table td {
+            padding: 12px 20px;
+            border: 1px solid #ffbdd9;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .translations-table th {
+            background-color: #ff6f91;
+            color: white;
+            font-size: 18px;
+        }
+
+        .translations-table td {
+            background-color: #fffafc;
+        }
+
+        .translations-table tr:nth-child(even) td {
+            background-color: #f9e1e6;
+        }
+
+        .language-selection {
+            margin-bottom: 20px;
+        }
+
+        .language-selection label {
+            font-size: 16px;
+            color: #631225;
+        }
+
+        .language-box {
+            background: #f4f4f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-box h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #ff6f91;
+        }
+
+        .language-box p {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Indian Language Translator 🌸</h1>
+        <form method="POST">
+            <textarea name="text" placeholder="Type something cute here..." required>{{ input_text }}</textarea>
+
+            <div class="language-selection">
+                <h3>Select languages for translation:</h3>
+                {% for lang, code in languages.items() %}
+                    <label>
+                        <input type="checkbox" name="languages" value="{{ lang }}" {% if lang in selected_languages %}checked{% endif %}> {{ lang }}
+                    </label><br>
+                {% endfor %}
+            </div>
+
+            <br>
+            <button type="submit">💖 Translate 💖</button>
+            <br><br>
+            <button type="submit" name="select_all" value="true">🌟 Select All 🌟</button>
+        </form>
+
+        <h2>💌 Translations 💌</h2>
+        
+        <table class="translations-table">
+            <thead>
+                <tr>
+                    <th>Language</th>
+                    <th>Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lang in languages %}
+                    <tr>
+                        <td>{{ lang }}</td>
+                        <td>
+                            {% if lang in translations %}
+                                {{ translations[lang] }}
+                            {% else %}
+                                Waiting for translation...
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
