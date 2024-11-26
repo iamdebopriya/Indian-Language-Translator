@@ -100,53 +100,40 @@
         }
 
         .language-selection {
+            display: none; /* Initially hidden */
             margin-bottom: 20px;
+        }
+
+        .language-selection.active {
+            display: block; /* Shown when active */
         }
 
         .language-selection label {
             font-size: 16px;
             color: #631225;
         }
-
-        .language-box {
-            background: #f4f4f9;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .language-box h3 {
-            margin-bottom: 10px;
-            font-size: 18px;
-            color: #ff6f91;
-        }
-
-        .language-box p {
-            font-size: 16px;
-            color: #333;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🌸 Indian Language Translator 🌸</h1>
-        <form method="POST">
+        <form method="POST" id="translate-form">
             <textarea name="text" placeholder="Type something cute here..." required>{{ input_text }}</textarea>
-
-            <div class="language-selection">
+            
+            <button type="button" id="show-languages-btn">💖 Translate 💖</button>
+            
+            <div class="language-selection" id="language-selection">
                 <h3>Select languages for translation:</h3>
                 {% for lang, code in languages.items() %}
                     <label>
                         <input type="checkbox" name="languages" value="{{ lang }}" {% if lang in selected_languages %}checked{% endif %}> {{ lang }}
                     </label><br>
                 {% endfor %}
+                <br>
+                <button type="submit">🌟 Submit Translation 🌟</button>
+                <br><br>
+                <button type="submit" name="select_all" value="true">🌟 Select All 🌟</button>
             </div>
-
-            <br>
-            <button type="submit">💖 Translate 💖</button>
-            <br><br>
-            <button type="submit" name="select_all" value="true">🌟 Select All 🌟</button>
         </form>
 
         <h2>💌 Translations 💌</h2>
@@ -174,5 +161,13 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        // Show languages dynamically
+        document.getElementById('show-languages-btn').addEventListener('click', () => {
+            const langSelection = document.getElementById('language-selection');
+            langSelection.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
